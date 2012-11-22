@@ -11,9 +11,12 @@ _filesystem_pre_baseinstall () {
 _countdown 10 "ERASING $INSTALL_DRIVE"
 
 dd if=/dev/zero of=/dev/sda bs=512 count=1
-sfdisk ${INSTALL_DRIVE} << EOF
-,,L
-EOF
+echo "n
+p
+1
+
+
+w" | fdisk $INSTALL_DRIVE
 
 PARTITION_ROOT=1
 # make filesystems
