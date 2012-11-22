@@ -16,8 +16,8 @@ sfdisk ${INSTALL_DRIVE} << EOF
 EOF
 
 # make filesystems
-mkswap ${INSTALL_DRIVE}${PARTITION_SWAP}
-swapon ${INSTALL_DRIVE}${PARTITION_SWAP}
+#mkswap ${INSTALL_DRIVE}${PARTITION_SWAP}
+#swapon ${INSTALL_DRIVE}${PARTITION_SWAP}
 mkfs.ext4 ${INSTALL_DRIVE}${PARTITION_ROOT}
 # mkswap /dev/sda2
 
