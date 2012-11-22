@@ -18,6 +18,7 @@ EOF
 # make filesystems
 #mkswap ${INSTALL_DRIVE}${PARTITION_SWAP}
 #swapon ${INSTALL_DRIVE}${PARTITION_SWAP}
+echo $PARTION_ROOT
 mkfs.ext4 ${INSTALL_DRIVE}${PARTITION_ROOT}
 # mkswap /dev/sda2
 
