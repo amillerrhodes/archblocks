@@ -13,7 +13,6 @@ _countdown 10 "ERASING $INSTALL_DRIVE"
 dd if=/dev/zero of=/dev/sda bs=512 count=1
 sfdisk ${INSTALL_DRIVE} << EOF
 ,,L
-,19,S
 EOF
 
 # make filesystems
