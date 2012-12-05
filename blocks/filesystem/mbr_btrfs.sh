@@ -22,7 +22,7 @@ PARTITION_ROOT=1
 # make filesystems
 #mkswap ${INSTALL_DRIVE}${PARTITION_SWAP}
 #swapon ${INSTALL_DRIVE}${PARTITION_SWAP}
-mkfs.ext4 ${INSTALL_DRIVE}${PARTITION_ROOT}
+mkfs.btrfs ${INSTALL_DRIVE}${PARTITION_ROOT}
 # mkswap /dev/sda2
 
 # mount target
