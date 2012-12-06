@@ -41,7 +41,4 @@ _filesystem_pre_chroot ()
 
 _filesystem_post_chroot ()
 {
-# KERNEL_PARAMS used by BOOTLOADER
-# KERNEL_PARAMS="${KERNEL_PARAMS:+${KERNEL_PARAMS} }cryptdevice=/dev/sda3:${LABEL_ROOT_CRYPT} root=/dev/mapper/${LABEL_ROOT_CRYPT} ro rootfstype=ext4"
-#KERNEL_PARAMS="${KERNEL_PARAMS:+${KERNEL_PARAMS} }root=UUID=$(_get_uuid ${INSTALL_DRIVE}${PARTITION_ROOT}) ro rootfstype=ext4"
 }
