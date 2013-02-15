@@ -34,7 +34,8 @@ _defaultvalue LANGUAGE en_US.UTF-8
 _defaultvalue KEYMAP us
 _defaultvalue TIMEZONE US/Pacific
 _defaultvalue MODULES ""
-_defaultvalue HOOKS "base udev autodetect pata scsi sata filesystems usbinput fsck"
+#_defaultvalue HOOKS "base udev autodetect pata scsi sata filesystems usbinput fsck"
+_defaultvalue HOOKS "base udev autodetect modconf block filesystems usbinput"
 _defaultvalue KERNEL_PARAMS # "quiet" # set/used in FILESYSTEM,INIT,BOOTLOADER blocks
 _defaultvalue AURHELPER packer
 _defaultvalue INSTALL_DRIVE query # this overrides any default value set in FILESYSTEM block
@@ -70,7 +71,7 @@ _defaultvalue DESKTOP ""
 _defaultvalue POSTFLIGHT "common/postflight_rootpass common/postflight_sudouser"
 _defaultvalue APPSETS ""
 _defaultvalue PACKAGES "git"
-_defaultvalue AURPACKAGES "git"
+_defaultvalue AURPACKAGES ""
 
 # ARCH PREP & SYSTEM INSTALL (PRE CHROOT) --------------------------------
 if ! $INCHROOT; then
@@ -91,7 +92,7 @@ umount /tmp || _anykey "didn't unmount tmp..."
 _loadblock "${FILESYSTEM}"      # LOAD FILESYSTEM FUNCTIONS
 pacman -Sy
 _filesystem_post_chroot         # FILESYSTEM POST-CHROOT CONFIGURATION
-_systemd && _loadblock "common/systemd_default" # PURE SYSTEMD INSTALL
+#_systemd && _loadblock "common/systemd_default" # NO LONGER NEEDED
 _loadblock "${SETLOCALE}"       # SET LOCALE
 _loadblock "${TIME}"            # TIME
 _loadblock "${HOST}"            # HOSTNAME

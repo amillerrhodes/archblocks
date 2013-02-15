@@ -1,33 +1,56 @@
 _drivequery;
 
 BOOT_DRIVE=$INSTALL_DRIVE # expected format /dev/sda
+SDX=`echo $INSTALL_DRIVE | cut -d '/' -f3` # turns /dev/sda into sda
 PARTITION_EFI_BOOT=0
-LABEL_SWAP=swap
+
+LABEL_BOOT=boot
 LABEL_ROOT=root
-MOUNT_PATH=/mnt
+LABEL_HOME=home
+LABEL_SWAP=swap
+
+PARTITION_BOOT=1
+PARTITION_ROOT=2
+PARTITION_HOME=3
+PARTITION_SWAP=4
+
+MOUNT_PATH=/mnt/
 
 
 _filesystem_pre_baseinstall () {
 _countdown 10 "ERASING $INSTALL_DRIVE"
 
-dd if=/dev/zero of=/dev/sda bs=512 count=1
-echo "n
-p
-1
+boot=$((   1   +   100    ))
+root=$(( $boot + (1024*5) ))
+swap=$(( $root + (1024*0.5) ))
 
+max=$(( $(cat /sys/block/$SDX/size) * 512 / 1024 / 1024 - 1 ))
 
-w" | fdisk $INSTALL_DRIVE
+#for part in `lsblk --output MAJ:MIN /dev/sda | grep ":[1-9]" | cut -d ':' -f 2`
+#do
+#    parted $INSTALL_DRIVE --script -- rm $part
+#done
 
-PARTITION_ROOT=1
+# Create partition table
+parted $INSTALL_DRIVE --script -- mklabel msdos
+parted $INSTALL_DRIVE --script -- unit MiB mkpart primary 1 $boot
+parted $INSTALL_DRIVE --script -- unit MiB mkpart primary $boot $root
+parted $INSTALL_DRIVE --script -- unit MiB mkpart primary linux-swap $root $swap
+parted $INSTALL_DRIVE --script -- unit MiB mkpart primary $swap $max
+
 # make filesystems
-#mkswap ${INSTALL_DRIVE}${PARTITION_SWAP}
-#swapon ${INSTALL_DRIVE}${PARTITION_SWAP}
+mkfs.ext2 ${INSTALL_DRIVE}${PARTITION_BOOT}
 mkfs.ext4 ${INSTALL_DRIVE}${PARTITION_ROOT}
-# mkswap /dev/sda2
+mkfs.ext4 ${INSTALL_DRIVE}${PARTITION_HOME}
+mkswap ${INSTALL_DRIVE}${PARTITION_SWAP}
+
+swapon ${INSTALL_DRIVE}${PARTITION_SWAP}
 
 # mount target
 mkdir -p ${MOUNT_PATH}
 mount ${INSTALL_DRIVE}${PARTITION_ROOT} ${MOUNT_PATH}
+mount ${INSTALL_DRIVE}${PARTITION_BOOT} ${MOUNT_PATH}${LABEL_BOOT}
+mount ${INSTALL_DRIVE}${PARTITION_HOME} ${MOUNT_PATH}${LABEL_HOME}
 }
 
 _filesystem_post_baseinstall () {
@@ -41,7 +64,4 @@ _filesystem_pre_chroot ()
 
 _filesystem_post_chroot ()
 {
-# KERNEL_PARAMS used by BOOTLOADER
-# KERNEL_PARAMS="${KERNEL_PARAMS:+${KERNEL_PARAMS} }cryptdevice=/dev/sda3:${LABEL_ROOT_CRYPT} root=/dev/mapper/${LABEL_ROOT_CRYPT} ro rootfstype=ext4"
-#KERNEL_PARAMS="${KERNEL_PARAMS:+${KERNEL_PARAMS} }root=UUID=$(_get_uuid ${INSTALL_DRIVE}${PARTITION_ROOT}) ro rootfstype=ext4"
 }

@@ -28,7 +28,7 @@ TIMEZONE=US/Pacific
 MODULES="ext2 ext4 vfat"
 #HOOKS="base udev autodetect pata scsi sata usb usbinput consolefont encrypt filesystems fsck shutdown"
 # possible fix for occasional blank screen on resume? https://wiki.archlinux.org/index.php/Pm-utils#Blank_screen_issue
-HOOKS="base udev autodetect pata scsi sata usb usbinput consolefont encrypt filesystems fsck shutdown"
+HOOKS="base udev autodetect block usbinput filesystems fsck"
 
 
 INSTALL_DRIVE=query # "/dev/sda" "query" or blank (blank is the same as "query")
@@ -40,5 +40,5 @@ BOOTLOADER=bootloader/bios_grub2
 NETWORK=network/wired_wireless_default
 
 # EXECUTE ----------------------------------------------------------------
-. <(curl -fsL "${REMOTE}/blocks/_lib/helpers.sh"); _loadblock "_lib/core"
+. < ./blocks/_lib/helpers.sh; _loadblock "_lib/core"
 

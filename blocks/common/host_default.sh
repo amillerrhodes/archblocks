@@ -2,6 +2,5 @@
 #
 # HOST
 
-echo ${HOSTNAME} > /etc/hostname;
-sed -i "s/localhost\.localdomain/${HOSTNAME}/g" /etc/hosts;
+echo ${HOSTNAME} > /etc/hostname
 

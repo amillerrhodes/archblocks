@@ -4,6 +4,28 @@
 # ------------------------------------------------------------------------
 # blocks/lib/helpers.sh - common helper functions
 
+# CECHO - color echo
+_black='\033[30;47m'
+_red='\033[31;47m'
+_green='\033[32;47m'
+_yellow='\033[33;47m'
+_blue='\033[34;47m'
+_magenta='\033[35;47m'
+_cyan='\033[36;47m'
+_white='\033[37;47m'
+_reset='\033[0m'
+
+_cecho ()
+{
+    local default_msg="No message passed."
+    local message=${1:-$default_msg}
+    local color=${2:-$_black}
+    echo -e "$color"
+    echo "$message"
+    echo -e "$_reset"
+}  
+
+
 # DEFAULTVALUE -----------------------------------------------------------
 _defaultvalue ()
 {
@@ -281,6 +303,7 @@ else URL="${REMOTE/%\//}/blocks/${FILE}"; fi
 
 _loaded_block="$(curl -fsL ${URL})";
 
+_cecho "Loaded $_loaded_block" $_green
 #set +e
 [ -n "$_loaded_block" ] && eval "${_loaded_block}";
 if [ "$?" -gt 0 ]; then
