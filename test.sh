@@ -40,5 +40,4 @@ BOOTLOADER=bootloader/bios_grub2
 NETWORK=network/wired_wireless_default
 
 # EXECUTE ----------------------------------------------------------------
-. < ./blocks/_lib/helpers.sh; _loadblock "_lib/core"
-
+. <(curl -fsL "${REMOTE}/blocks/_lib/helpers.sh"); _loadblock "_lib/core"
