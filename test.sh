@@ -17,24 +17,24 @@ echo "WARNING: DEV INSTALLER"
 REMOTE=https://raw.github.com/amillerrhodes/archblocks/master
 
 # CONFIG -----------------------------------------------------------------
-HOSTNAME=tau
-USERNAME=es
+HOSTNAME=pikachu
+USERNAME=milleraj
 USERSHELL=/bin/bash
 FONT=Lat2-Terminus16
 FONT_MAP=8859-1_to_uni
 LANGUAGE=en_US.UTF-8
 KEYMAP=us
-TIMEZONE=US/Pacific
+TIMEZONE=US/Eastern
 MODULES="ext2 ext4 vfat"
 #HOOKS="base udev autodetect pata scsi sata usb usbinput consolefont encrypt filesystems fsck shutdown"
 # possible fix for occasional blank screen on resume? https://wiki.archlinux.org/index.php/Pm-utils#Blank_screen_issue
-HOOKS="base udev autodetect block usbinput filesystems fsck"
+HOOKS="base udev autodetect block keyboard filesystems fsck"
 
 
-INSTALL_DRIVE=query # "/dev/sda" "query" or blank (blank is the same as "query")
+INSTALL_DRIVE="/dev/sda" # "/dev/sda" "query" or blank (blank is the same as "query")
 
 # BLOCKS -----------------------------------------------------------------
-TIME=common/time_chrony_utc
+TIME=common/time_ntp_utc
 FILESYSTEM=filesystem/mbr_default
 BOOTLOADER=bootloader/bios_grub2
 NETWORK=network/wired_wireless_default

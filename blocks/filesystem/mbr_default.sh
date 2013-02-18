@@ -21,7 +21,7 @@ _filesystem_pre_baseinstall () {
 _countdown 10 "ERASING $INSTALL_DRIVE"
 
 boot=$((   1   +   100    ))
-root=$(( $boot + (1024*5) ))
+root=$(( $boot + (1024*40) ))
 swap=$(( $root + (1024*1) ))
 
 max=$(( $(cat /sys/block/$SDX/size) * 512 / 1024 / 1024 - 1 ))
